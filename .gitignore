@@ -34,3 +34,6 @@ compose.override.yaml
 
 # Claude Code tooling
 .claude/
+
+# superpowers brainstorm mockups
+.superpowers/
