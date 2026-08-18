@@ -2,7 +2,8 @@
 import config from "@/config";
 
 // —— 品牌信息集中在此,日后改头像/名字/按钮只动这里 ——
-const avatarLetter = "Y";
+const avatarSrc = "/avatar.jpg"; // 换成别的图片就改这里
+const avatarAlt = "YooVood 的头像";
 const brandName = "YooVood";
 const tagline = "记录技术、学习与生活";
 const githubUrl = config.site.profile ?? "https://github.com/wyk2005";
@@ -13,12 +14,13 @@ const postsUrl = "/posts";
   id="hero"
   class="border-border border-b pt-8 pb-6 flex items-center gap-4"
 >
-  <div
-    aria-hidden="true"
-    class="bg-accent text-accent-foreground flex size-14 shrink-0 select-none items-center justify-center rounded-full text-2xl font-bold"
-  >
-    {avatarLetter}
-  </div>
+  <img
+    src={avatarSrc}
+    alt={avatarAlt}
+    width="56"
+    height="56"
+    class="bg-accent size-14 shrink-0 rounded-full object-cover"
+  />
 
   <div class="min-w-0">
     <h1 class="my-0 text-xl font-bold sm:text-2xl">你好,我是 {brandName} 👋</h1>
