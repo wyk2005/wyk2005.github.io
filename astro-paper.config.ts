@@ -3,9 +3,9 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://wyk2005.github.io/",
-    title: "魏玉恺的博客",
+    title: "YooVood的博客",
     description: "记录技术、学习与生活。",
-    author: "魏玉恺",
+    author: "wyk",
     profile: "https://github.com/wyk2005",
     ogImage: "default-og.jpg",
     lang: "zh",
