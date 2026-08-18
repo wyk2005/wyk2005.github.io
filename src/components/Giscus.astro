@@ -1,0 +1,29 @@
+---
+import config from "@/config";
+
+const c = config.comments;
+const enabled =
+  c?.provider === "giscus" && Boolean(c.repoId) && Boolean(c.categoryId);
+---
+
+{enabled && c && (
+  <div class="mt-10 border-t border-border pt-8">
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={c.repo}
+      data-repo-id={c.repoId}
+      data-category={c.category}
+      data-category-id={c.categoryId}
+      data-mapping={c.mapping ?? "pathname"}
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme={c.theme ?? "preferred_color_scheme"}
+      data-lang={c.lang ?? "zh-CN"}
+      crossorigin="anonymous"
+      async
+    />
+  </div>
+)}
