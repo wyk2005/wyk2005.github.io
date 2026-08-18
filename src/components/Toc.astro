@@ -1,0 +1,87 @@
+---
+import type { MarkdownHeading } from "astro";
+
+type Props = {
+  headings: MarkdownHeading[];
+};
+
+const { headings } = Astro.props;
+
+const tocItems = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+
+{
+  tocItems.length > 0 && (
+    <aside class="text-sm">
+      <p class="text-muted-foreground mb-3 font-semibold">📑 目录</p>
+      <nav>
+        <ul class="space-y-1.5">
+          {tocItems.map(item => (
+            <li class:list={[{ "ps-3": item.depth === 3 }]}>
+              <a href={`#${item.slug}`} data-toc-link class="toc-link">
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+  )
+}
+
+<script is:inline data-astro-rerun>
+  (function () {
+    const links = Array.from(document.querySelectorAll("[data-toc-link]"));
+    if (links.length === 0) return;
+
+    const headings = links
+      .map(l => document.getElementById((l.getAttribute("href") || "").slice(1)))
+      .filter(Boolean);
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // 点击目录项:平滑滚动 + 更新 URL hash
+    for (const link of links) {
+      link.addEventListener("click", e => {
+        const id = (link.getAttribute("href") || "").slice(1);
+        const target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
+        history.replaceState(null, "", `#${id}`);
+      });
+    }
+
+    function updateActive() {
+      let currentId = "";
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top <= 88) {
+          currentId = h.id;
+        }
+      }
+      // 页面滚过全部标题后,高亮最后一项
+      if (!currentId && headings.length) {
+        const last = headings[headings.length - 1];
+        if (last.getBoundingClientRect().top < window.innerHeight) {
+          currentId = last.id;
+        }
+      }
+      for (const link of links) {
+        link.classList.toggle(
+          "is-active",
+          link.getAttribute("href") === `#${currentId}`
+        );
+      }
+    }
+
+    window.addEventListener("scroll", () => requestAnimationFrame(updateActive), {
+      passive: true,
+    });
+    updateActive();
+  })();
+</script>

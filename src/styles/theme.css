@@ -48,3 +48,17 @@ h5,
 h6 {
   font-family: var(--font-head);
 }
+
+/* 文章页侧栏目录 */
+.toc-link {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 150ms;
+}
+.toc-link:hover {
+  color: var(--dot);
+}
+.toc-link.is-active {
+  color: var(--accent);
+  font-weight: 600;
+}
